@@ -13,6 +13,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.json.JSONObject
+import java.util.Calendar
 import javax.inject.Inject
 
 @HiltViewModel
@@ -39,13 +40,13 @@ class EmployeeViewModel @Inject constructor(
         selectedEmployee = employee
     }
 
-    var selectedDateBirth: String? = null
+    var selectedDateBirth: Calendar = Calendar.getInstance()
     var selectedPlaceOfBirth: String? = null
     var selectedGender: String? = null
     var selectedResidential: String? = null
 
     fun clearData() {
-        selectedDateBirth = null
+        selectedDateBirth = Calendar.getInstance()
         selectedGender = null
         selectedResidential = null
         selectedEmployee = null
