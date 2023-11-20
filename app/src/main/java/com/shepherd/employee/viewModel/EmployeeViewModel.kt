@@ -175,11 +175,19 @@ class EmployeeViewModel @Inject constructor(
                 }
             } catch (e: Exception) {
                 // Handle network errors
+                _coloursListUiState.update {
+                    it.copy(
+                        isError = true,
+                        isLoading = false,
+                        isSuccess = false,
+                        colours = emptyList(),
+                    )
+                }
             }
         }
     }
 
-    fun addEmployee(selectedEmployee: Employee) {
+    fun addEmployee(selectedEmployee: Employee, selectedColour: Colour) {
         viewModelScope.launch {
             _submitInformationUiState.update {
                 it.copy(
@@ -193,7 +201,7 @@ class EmployeeViewModel @Inject constructor(
                 userLoginToken = token,
                 additionalInformation = AdditionalInformation(
                     placeOfBirth = selectedPlaceOfBirth,
-                    preferredColor = selectedColour!!.color,
+                    preferredColor = selectedColour.color,
                     residential = selectedResidential,
 
                 ),

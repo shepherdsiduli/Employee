@@ -71,8 +71,8 @@ fun ReviewScreen(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-                viewModel.selectedEmployee?.let {
-                    LoadImageFromUrl(viewModel.selectedEmployee!!.avatar)
+                viewModel.selectedEmployee?.avatar?.let {
+                    LoadImageFromUrl(it)
                 }
 
                 Column(
@@ -82,7 +82,7 @@ fun ReviewScreen(
                 ) {
                     viewModel.selectedEmployee?.let {
                         Text(text = "${it.firstName} ${it.lastName}")
-                        Text(text = "${it.email}")
+                        Text(text = it.email)
                     }
                     Text(text = calendarToString(viewModel.selectedDateBirth))
                     Text(text = " ${viewModel.selectedGender}")
@@ -111,7 +111,11 @@ fun ReviewScreen(
 
             Button(
                 onClick = {
-                    viewModel.selectedEmployee?.let { viewModel.addEmployee(it) }
+                    viewModel.selectedEmployee?.let { employee ->
+                        viewModel.selectedColour?.let { colour ->
+                            viewModel.addEmployee(employee, colour)
+                        }
+                    }
                 },
                 modifier = Modifier
                     .fillMaxWidth()
