@@ -140,11 +140,6 @@ fun SelectEmployeeScreenScreen(
                 thickness = 1.dp,
             )
 
-//            DateTextField(
-//                label = stringResource(id = R.string.date_of_birth),
-//                selectedDate = selectedDate,
-//            )
-
             OutlinedTextField(
                 value = text,
                 onValueChange = {
@@ -193,53 +188,4 @@ fun SelectEmployeeScreenScreen(
             )
         }
     }
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun DateTextField(
-    label: String,
-    selectedDate: Calendar,
-//    onDateSelected: (Calendar) -> Unit
-) {
-    var text by remember { mutableStateOf(TextFieldValue()) }
-    val context = LocalContext.current
-    val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-
-    OutlinedTextField(
-        value = text,
-        onValueChange = {
-            text = it
-        },
-        label = { Text(label) },
-        keyboardOptions = KeyboardOptions(
-            keyboardType = KeyboardType.Number,
-            imeAction = ImeAction.Done,
-        ),
-        keyboardActions = KeyboardActions(
-            onDone = {
-                // Process final text input or perform validation
-            },
-        ),
-        trailingIcon = {
-            IconButton(
-                onClick = {
-                    showDatePicker(context, selectedDate) {
-                        // onDateSelected(it)
-                        dateFormat.format(it.time).also { formattedDate ->
-                            text = TextFieldValue(text = formattedDate)
-                        }
-                    }
-                },
-            ) {
-                Icon(
-                    imageVector = Icons.Default.DateRange,
-                    contentDescription = "Date Selection",
-                )
-            }
-        },
-        modifier = Modifier
-            .padding(16.dp)
-            .fillMaxWidth(),
-    )
 }
