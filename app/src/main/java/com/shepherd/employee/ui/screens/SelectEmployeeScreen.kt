@@ -51,14 +51,16 @@ fun SelectEmployeeScreenScreen(
     navController: NavHostController,
     viewModel: EmployeeViewModel,
 ) {
-    // val scaffordState = rememberScaffoldState()
-
     val dateOfBirthState = remember { mutableStateOf(TextFieldValue()) }
     val placeOfBirth = remember { mutableStateOf(TextFieldValue()) }
     Scaffold(
         topBar = {
             AppBarWithAction(
-                onActionClick = { navController.navigate(Screen.AdditionalInformationScreen.route) },
+                onActionClick = {
+                    viewModel.selectedDateBirth = dateOfBirthState.value.text
+                    viewModel.selectedPlaceOfBirth = dateOfBirthState.value.text
+                    navController.navigate(Screen.AdditionalInformationScreen.route)
+                },
                 title = stringResource(id = R.string.select),
             )
             Divider(

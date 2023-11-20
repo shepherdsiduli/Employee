@@ -41,7 +41,10 @@ fun AdditionalInformationScreen(
     Scaffold(
         topBar = {
             AppBarWithAction(
-                onActionClick = { navController.navigate(Screen.ReviewScreen.route) },
+                onActionClick = {
+                    viewModel.selectedResidential = residentialAddress.value.text
+                    navController.navigate(Screen.ReviewScreen.route)
+                },
                 title = stringResource(id = R.string.additional_information),
             )
             Divider(

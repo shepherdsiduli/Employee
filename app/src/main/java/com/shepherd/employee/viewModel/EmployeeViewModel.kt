@@ -42,6 +42,7 @@ class EmployeeViewModel @Inject constructor(
     }
 
     var selectedDateBirth: String? = null
+    var selectedPlaceOfBirth: String? = null
     var selectedGender: String? = null
     var selectedResidential: String? = null
 
