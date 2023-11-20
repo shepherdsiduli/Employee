@@ -29,6 +29,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
@@ -63,24 +64,13 @@ fun SelectEmployeeScreenScreen(
                 },
                 title = stringResource(id = R.string.select),
             )
-            Divider(
-                modifier = Modifier
-                    .padding(vertical = 1.dp),
-                color = Color.Black,
-                thickness = 1.dp,
-            )
         },
     ) { _ ->
         Column(
             modifier = Modifier
-                .padding(horizontal = 16.dp, vertical = 100.dp),
+                .padding(horizontal = 16.dp, vertical = 120.dp),
         ) {
-            Divider(
-                modifier = Modifier
-                    .padding(vertical = 1.dp),
-                color = Color.Black,
-                thickness = 1.dp,
-            )
+            Spacer(modifier = Modifier.height(8.dp))
 
             Text(
                 text = stringResource(id = R.string.select_an_employee),
@@ -88,6 +78,7 @@ fun SelectEmployeeScreenScreen(
                 modifier = Modifier.padding(bottom = 10.dp),
                 fontSize = 16.sp,
                 textAlign = TextAlign.Start,
+                fontWeight = FontWeight.Bold,
             )
 
             Divider(
@@ -148,7 +139,7 @@ fun SelectEmployeeScreenScreen(
                 label = { Text(text = stringResource(id = R.string.date_of_birth)) },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(8.dp),
+                    .padding(horizontal = 8.dp, vertical = 32.dp),
             )
 
             OutlinedTextField(

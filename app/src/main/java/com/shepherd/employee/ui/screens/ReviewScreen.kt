@@ -11,9 +11,11 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -42,19 +44,13 @@ fun ReviewScreen(
             modifier = Modifier
                 .padding(horizontal = 16.dp, vertical = 100.dp),
         ) {
-            Divider(
-                modifier = Modifier
-                    .padding(vertical = 1.dp),
-                color = Color.Black,
-                thickness = 1.dp,
-            )
-
             Text(
                 text = stringResource(id = R.string.personal_details),
                 color = Color.Black,
                 modifier = Modifier.padding(bottom = 10.dp),
                 fontSize = 16.sp,
                 textAlign = TextAlign.Start,
+                fontWeight = FontWeight.Bold,
             )
 
             Divider(
@@ -64,13 +60,19 @@ fun ReviewScreen(
                 thickness = 1.dp,
             )
 
-            Row() {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
                 viewModel.selectedEmployee?.let {
                     LoadImageFromUrl(viewModel.selectedEmployee!!.avatar)
                 }
 
                 Column(
-                    modifier = Modifier.padding(16.dp),
+                    modifier = Modifier.padding(8.dp),
                     verticalArrangement = Arrangement.SpaceEvenly,
 
                 ) {
@@ -88,6 +90,15 @@ fun ReviewScreen(
                 thickness = 1.dp,
             )
 
+            Text(
+                text = stringResource(id = R.string.additional_information),
+                color = Color.Black,
+                modifier = Modifier.padding(bottom = 10.dp, top = 20.dp),
+                fontSize = 16.sp,
+                textAlign = TextAlign.Start,
+                fontWeight = FontWeight.Bold,
+            )
+
             Text(text = if (viewModel.selectedColour != null) " ${viewModel.selectedColour!!.name}" else "Colour")
             Text(text = if (viewModel.selectedDateBirth != null) " ${viewModel.selectedDateBirth}" else "Place of Birth")
             Text(text = if (viewModel.selectedResidential != null) " ${viewModel.selectedResidential}" else "Residential Address")
@@ -99,7 +110,7 @@ fun ReviewScreen(
                 },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(8.dp),
+                    .padding(horizontal = 8.dp, vertical = 20.dp),
             ) {
                 Text(text = stringResource(id = R.string.submit))
             }

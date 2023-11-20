@@ -12,10 +12,14 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Tab
+import androidx.compose.material3.TabRow
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -30,6 +34,10 @@ import com.shepherd.employee.ui.navigation.Screen
 import com.shepherd.employee.ui.screens.composables.AppBarWithAction
 import com.shepherd.employee.ui.screens.composables.ColoredCircle
 import com.shepherd.employee.viewModel.EmployeeViewModel
+
+enum class Gender {
+    MALE, FEMALE, OTHER
+}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -59,42 +67,12 @@ fun AdditionalInformationScreen(
             modifier = Modifier
                 .padding(horizontal = 16.dp, vertical = 100.dp),
         ) {
-            Text(
-                text = stringResource(id = R.string.choose_gender),
-                color = Color.Black,
-                modifier = Modifier.padding(bottom = 10.dp),
-                fontSize = 16.sp,
-            )
-
-            Divider(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 1.dp),
-                color = Color.Black,
-                thickness = 1.dp,
-            )
-
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Text(
-                    text = stringResource(id = R.string.male),
-                    modifier = Modifier.weight(0.6f),
-                )
-
-                Text(
-                    text = stringResource(id = R.string.female),
-                    modifier = Modifier.weight(0.6f),
-                )
-
-                Text(
-                    text = stringResource(id = R.string.other),
-                    modifier = Modifier.weight(0.6f),
-                )
-            }
+            GenderSelection()
 
             Text(
                 text = stringResource(id = R.string.select_preferred_colour),
                 color = Color.Black,
-                modifier = Modifier.padding(bottom = 10.dp),
+                modifier = Modifier.padding(bottom = 10.dp, top = 32.dp),
                 fontSize = 16.sp,
             )
 
@@ -155,8 +133,54 @@ fun AdditionalInformationScreen(
                 label = { Text(text = stringResource(id = R.string.residential_address)) },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(8.dp),
+                    .padding(horizontal = 8.dp, vertical = 32.dp),
             )
+        }
+    }
+}
+
+@Composable
+fun GenderSelection() {
+    var selectedGender by remember { mutableStateOf(Gender.MALE) }
+
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(2.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        Text(
+            text = stringResource(id = R.string.choose_gender),
+            color = Color.Black,
+            modifier = Modifier.padding(bottom = 10.dp),
+            fontSize = 16.sp,
+        )
+
+        Divider(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 1.dp),
+            color = Color.Black,
+            thickness = 1.dp,
+        )
+
+        TabRow(
+            selectedTabIndex = when (selectedGender) {
+                Gender.MALE -> 0
+                Gender.FEMALE -> 1
+                Gender.OTHER -> 2
+            },
+        ) {
+            Gender.values().forEachIndexed { index, gender ->
+                Tab(
+                    text = { Text(gender.name) },
+                    selected = selectedGender == gender,
+                    onClick = {
+                        selectedGender = gender
+                        // onGenderSelected(gender)
+                    },
+                )
+            }
         }
     }
 }

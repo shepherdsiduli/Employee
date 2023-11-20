@@ -7,13 +7,11 @@ import com.shepherd.employee.networking.data.response.Colour
 import com.shepherd.employee.networking.data.response.Employee
 import com.shepherd.employee.repo.EmployeeRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import okhttp3.RequestBody
 import org.json.JSONObject
 import javax.inject.Inject
 
@@ -54,21 +52,21 @@ class EmployeeViewModel @Inject constructor(
         selectedColour = null
     }
 
+    private fun getLoginRequest(username: String, password: String) = JSONObject().apply {
+        put("username", username)
+        put("password", password)
+    }.getJsonRequestBody()
+
     fun login(username: String, password: String) {
-        val username2 = "tracey.ramos@reqres.in"
-        val password2 = "test"
         _loginUiState.update {
             it.copy(
                 isLoading = true,
             )
         }
-        viewModelScope.launch(Dispatchers.IO) {
-            val body: RequestBody = JSONObject().apply {
-                put("username", username2)
-                put("password", password2)
-            }.getJsonRequestBody()
+        val request = getLoginRequest(username = username, password = password)
 
-            val result = repository.login(body)
+        viewModelScope.launch {
+            val result = repository.login(request)
             if (result.isSuccessful) {
                 _loginUiState.update {
                     it.copy(
@@ -154,7 +152,6 @@ class EmployeeViewModel @Inject constructor(
                             isError = false,
                             isLoading = false,
                             isSuccess = true,
-                            // employees = listOf(Employee(1, "test@email.com", "test", "lastName", "avatar")),
                             colours = colours,
                         )
                     }
@@ -193,7 +190,6 @@ class EmployeeViewModel @Inject constructor(
                             isError = false,
                             isLoading = false,
                             isSuccess = true,
-                            // employees = listOf(Employee(1, "test@email.com", "test", "lastName", "avatar")),
                             employees = employees,
                         )
                     }
