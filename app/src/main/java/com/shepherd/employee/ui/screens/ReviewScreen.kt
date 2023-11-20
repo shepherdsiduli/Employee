@@ -21,7 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.shepherd.employee.R
-import com.shepherd.employee.ui.navigation.Screen
+import com.shepherd.employee.networking.data.Utilities.calendarToString
 import com.shepherd.employee.ui.screens.composables.LoadImageFromUrl
 import com.shepherd.employee.ui.screens.composables.SimpleAppBar
 import com.shepherd.employee.viewModel.EmployeeViewModel
@@ -78,7 +78,7 @@ fun ReviewScreen(
                 ) {
                     Text(text = if (viewModel.selectedEmployee != null) " ${viewModel.selectedEmployee!!.firstName} ${viewModel.selectedEmployee!!.lastName}" else "Full Name")
                     Text(text = if (viewModel.selectedEmployee != null) " ${viewModel.selectedEmployee!!.email}" else "email")
-                    Text(text = if (viewModel.selectedDateBirth != null) " ${viewModel.selectedDateBirth}" else "DOB")
+                    Text(text = calendarToString(viewModel.selectedDateBirth))
                     Text(text = if (viewModel.selectedGender != null) " ${viewModel.selectedGender}" else "Gender")
                 }
             }
@@ -100,13 +100,13 @@ fun ReviewScreen(
             )
 
             Text(text = if (viewModel.selectedColour != null) " ${viewModel.selectedColour!!.name}" else "Colour")
-            Text(text = if (viewModel.selectedDateBirth != null) " ${viewModel.selectedDateBirth}" else "Place of Birth")
+            Text(text = if (viewModel.selectedPlaceOfBirth != null) " ${viewModel.selectedPlaceOfBirth}" else "Place of Birth")
             Text(text = if (viewModel.selectedResidential != null) " ${viewModel.selectedResidential}" else "Residential Address")
 
             Button(
                 onClick = {
-                    // viewModel.addEmployee()
-                    navController.navigate(Screen.SuccessfulScreen.route)
+                    viewModel.addEmployee()
+                   // navController.navigate(Screen.SuccessfulScreen.route)
                 },
                 modifier = Modifier
                     .fillMaxWidth()
