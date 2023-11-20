@@ -109,7 +109,7 @@ fun SelectEmployeeScreenScreen(
                     )
                 }
                 viewModel.selectedEmployee?.let {
-                    LoadImageFromUrl(viewModel.selectedEmployee!!.avatar)
+                    LoadImageFromUrl(it.avatar)
                 }
 
                 Column(

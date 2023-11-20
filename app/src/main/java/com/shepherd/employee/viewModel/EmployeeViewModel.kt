@@ -2,7 +2,11 @@ package com.shepherd.employee.viewModel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.shepherd.employee.networking.data.Utilities.calendarToString
 import com.shepherd.employee.networking.data.Utilities.getJsonRequestBody
+import com.shepherd.employee.networking.data.request.AddEmployeeRequest
+import com.shepherd.employee.networking.data.request.AdditionalInformation
+import com.shepherd.employee.networking.data.request.PersonalDetails
 import com.shepherd.employee.networking.data.response.Colour
 import com.shepherd.employee.networking.data.response.Employee
 import com.shepherd.employee.repo.EmployeeRepository
@@ -30,6 +34,9 @@ class EmployeeViewModel @Inject constructor(
     private var _coloursListUiState = MutableStateFlow(ColoursListViewState())
     var coloursListUiState: StateFlow<ColoursListViewState> = _coloursListUiState.asStateFlow()
 
+    private var _submitInformationUiState = MutableStateFlow(SubmitInformationViewState())
+    var submitInformationUiState: StateFlow<SubmitInformationViewState> = _submitInformationUiState.asStateFlow()
+
     var selectedColour: Colour? = null
     fun setColour(colour: Colour) {
         selectedColour = colour
@@ -41,16 +48,16 @@ class EmployeeViewModel @Inject constructor(
     }
 
     var selectedDateBirth: Calendar = Calendar.getInstance()
-    var selectedPlaceOfBirth: String? = null
-    var selectedGender: String? = null
-    var selectedResidential: String? = null
+    var selectedPlaceOfBirth: String = ""
+    var selectedGender: String = ""
+    var selectedResidential: String = ""
+
+    var token: String = ""
 
     fun clearData() {
         selectedDateBirth = Calendar.getInstance()
-        selectedGender = null
-        selectedResidential = null
-        selectedEmployee = null
-        selectedColour = null
+        selectedGender = ""
+        selectedResidential = ""
     }
 
     private fun getLoginRequest(username: String, password: String) = JSONObject().apply {
@@ -172,40 +179,62 @@ class EmployeeViewModel @Inject constructor(
         }
     }
 
-    fun addEmployee() {
+    fun addEmployee(selectedEmployee: Employee) {
         viewModelScope.launch {
-            _employeeListUiState.update {
+            _submitInformationUiState.update {
                 it.copy(
                     isError = false,
                     isLoading = true,
                     isSuccess = false,
-                    employees = emptyList(),
                 )
             }
+
+            val body = AddEmployeeRequest(
+                userLoginToken = token,
+                additionalInformation = AdditionalInformation(
+                    placeOfBirth = selectedPlaceOfBirth,
+                    preferredColor = selectedColour!!.color,
+                    residential = selectedResidential,
+
+                ),
+                personalDetails = PersonalDetails(
+                    id = selectedEmployee.id,
+                    email = selectedEmployee.email,
+                    first_Name = selectedEmployee.firstName,
+                    last_name = selectedEmployee.lastName,
+                    avatar = selectedEmployee.avatar,
+                    DOB = calendarToString(selectedDateBirth),
+                    gender = selectedGender.toString(),
+                ),
+            )
+
             try {
-                val response = repository.getEmployees(1, 12)
+                val response = repository.addEmployees(body)
                 if (response.isSuccessful) {
-                    val employees = response.body()?.data ?: emptyList()
-                    _employeeListUiState.update {
+                    _submitInformationUiState.update {
                         it.copy(
                             isError = false,
                             isLoading = false,
                             isSuccess = true,
-                            employees = employees,
                         )
                     }
                 } else {
-                    _employeeListUiState.update {
+                    _submitInformationUiState.update {
                         it.copy(
                             isError = true,
                             isLoading = false,
                             isSuccess = false,
-                            employees = emptyList(),
                         )
                     }
                 }
             } catch (e: Exception) {
-                // Handle network errors
+                _submitInformationUiState.update {
+                    it.copy(
+                        isError = true,
+                        isLoading = false,
+                        isSuccess = false,
+                    )
+                }
             }
         }
     }
@@ -227,6 +256,12 @@ class EmployeeViewModel @Inject constructor(
 
     data class ColoursListViewState(
         val colours: List<Colour> = emptyList(),
+        val isLoading: Boolean = false,
+        val isError: Boolean = false,
+        val isSuccess: Boolean = false,
+    )
+
+    data class SubmitInformationViewState(
         val isLoading: Boolean = false,
         val isError: Boolean = false,
         val isSuccess: Boolean = false,

@@ -14,5 +14,5 @@ interface EmployeeRepository {
     suspend fun getUsers(): Response<UserData>
     suspend fun getEmployees(page: Int, perPage: Int): Response<EmployeeResponse>
     suspend fun getColours(perPage: Int): Response<ColoursResponse>
-    suspend fun addEmployees(@Body body: AddEmployeeRequest): Response<LoginResponse>
+    suspend fun addEmployees(@Body body: AddEmployeeRequest): Response<Unit>
 }

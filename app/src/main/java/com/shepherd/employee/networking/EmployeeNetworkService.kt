@@ -20,8 +20,8 @@ interface EmployeeNetworkService {
     @GET(Endpoints.USERS)
     suspend fun getUsers(): Response<UserData>
 
-    @GET(Endpoints.USERS)
-    suspend fun addEmployees(@Body body: AddEmployeeRequest): Response<LoginResponse>
+    @POST(Endpoints.USERS)
+    suspend fun addEmployees(@Body body: AddEmployeeRequest): Response<Unit>
 
     @GET(Endpoints.USERS)
     suspend fun getEmployees(

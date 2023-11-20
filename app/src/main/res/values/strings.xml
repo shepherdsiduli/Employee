@@ -24,6 +24,7 @@
     <string name="personal_details">Personal Details</string>
     <string name="additional_information">Additional Information</string>
     <string name="submit">Submit</string>
+    <string name="error_occurred">Error Occurred</string>
     <string name="done">Done</string>
     <string name="successful">Successful</string>
 </resources>

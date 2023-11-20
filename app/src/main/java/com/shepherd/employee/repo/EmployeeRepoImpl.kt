@@ -36,7 +36,7 @@ class EmployeeRepoImpl @Inject constructor(
         return networkService.getColours(perPage)
     }
 
-    override suspend fun addEmployees(request: AddEmployeeRequest): Response<LoginResponse> {
+    override suspend fun addEmployees(request: AddEmployeeRequest): Response<Unit> {
         return networkService.addEmployees(request)
     }
 }
