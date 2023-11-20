@@ -25,7 +25,7 @@ import com.shepherd.employee.R
 import com.shepherd.employee.networking.data.response.Colour
 import com.shepherd.employee.ui.navigation.Screen
 import com.shepherd.employee.ui.screens.composables.ColoredCircle
-import com.shepherd.employee.ui.screens.composables.employeeAppBar
+import com.shepherd.employee.ui.screens.composables.SimpleAppBar
 import com.shepherd.employee.viewModel.EmployeeViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -38,7 +38,7 @@ fun ColoursListScreen(
 
     Scaffold(
         topBar = {
-            employeeAppBar(title = stringResource(id = R.string.select_preferred_colour))
+            SimpleAppBar(title = stringResource(id = R.string.select_preferred_colour))
         },
     ) { innerPadding ->
 
@@ -83,6 +83,8 @@ fun ColoursList(
                     viewModel.setColour(colour)
                     navController.navigate(Screen.AdditionalInformationScreen.route)
                 },
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically,
             ) {
                 ColoredCircle(
                     hexColor = colour.color,

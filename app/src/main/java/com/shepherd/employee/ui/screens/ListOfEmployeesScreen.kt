@@ -24,7 +24,8 @@ import androidx.navigation.NavHostController
 import com.shepherd.employee.R
 import com.shepherd.employee.networking.data.response.Employee
 import com.shepherd.employee.ui.navigation.Screen
-import com.shepherd.employee.ui.screens.composables.employeeAppBar
+import com.shepherd.employee.ui.screens.composables.LoadImageFromUrl
+import com.shepherd.employee.ui.screens.composables.SimpleAppBar
 import com.shepherd.employee.viewModel.EmployeeViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -37,7 +38,7 @@ fun ListOfEmployeesScreen(
 
     Scaffold(
         topBar = {
-            employeeAppBar(title = stringResource(id = R.string.list_of_employees))
+            SimpleAppBar(title = stringResource(id = R.string.list_of_employees))
         },
     ) { innerPadding ->
         Column(
@@ -76,6 +77,8 @@ fun EmployeeList(navController: NavHostController, employees: List<Employee>, mo
                     viewModel.setEmployee(employee = employee)
                     navController.navigate(Screen.SelectEmployeeScreen.route)
                 },
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically,
             ) {
                 LoadImageFromUrl(employee.avatar)
 

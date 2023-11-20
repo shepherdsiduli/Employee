@@ -18,7 +18,7 @@ import com.shepherd.employee.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun employeeAppBarWithAction(onActionClick: () -> Unit, title: String) {
+fun AppBarWithAction(onActionClick: () -> Unit, title: String) {
     TopAppBar(
         title = {
             Text(

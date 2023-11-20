@@ -54,7 +54,7 @@ class EmployeeViewModel @Inject constructor(
     }
 
     fun login(username: String, password: String) {
-        val username2 = "tracey.ramos@reqres.in1"
+        val username2 = "tracey.ramos@reqres.in"
         val password2 = "test"
         _loginUiState.update {
             it.copy(

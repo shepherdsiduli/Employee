@@ -3,6 +3,7 @@ package com.shepherd.employee.ui.screens
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Divider
@@ -26,8 +27,8 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.shepherd.employee.R
 import com.shepherd.employee.ui.navigation.Screen
+import com.shepherd.employee.ui.screens.composables.AppBarWithAction
 import com.shepherd.employee.ui.screens.composables.ColoredCircle
-import com.shepherd.employee.ui.screens.composables.employeeAppBarWithAction
 import com.shepherd.employee.viewModel.EmployeeViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -39,7 +40,7 @@ fun AdditionalInformationScreen(
     val residentialAddress = remember { mutableStateOf(TextFieldValue()) }
     Scaffold(
         topBar = {
-            employeeAppBarWithAction(
+            AppBarWithAction(
                 onActionClick = { navController.navigate(Screen.ReviewScreen.route) },
                 title = stringResource(id = R.string.additional_information),
             )
@@ -94,7 +95,21 @@ fun AdditionalInformationScreen(
                 fontSize = 16.sp,
             )
 
-            Row() {
+            Divider(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 1.dp),
+                color = Color.Black,
+                thickness = 1.dp,
+            )
+
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
                 if (viewModel.selectedColour == null) {
                     ColoredCircle(hexColor = "#45B5AA")
                 }
@@ -110,12 +125,14 @@ fun AdditionalInformationScreen(
                     Text(text = if (viewModel.selectedColour != null) viewModel.selectedColour!!.name else "Colour name")
                 }
 
+                Spacer(modifier = Modifier.weight(1f))
+
                 IconButton(
                     onClick = { navController.navigate(Screen.SelectColourScreen.route) },
                     modifier = Modifier.padding(end = 8.dp),
                 ) {
                     Icon(
-                        painter = painterResource(id = R.drawable.ic_next),
+                        painter = painterResource(id = R.drawable.ic_navigate_next),
                         contentDescription = "Colours Icon",
                     )
                 }
@@ -140,4 +157,3 @@ fun AdditionalInformationScreen(
         }
     }
 }
-

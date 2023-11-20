@@ -7,10 +7,11 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.Preview
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun employeeAppBar(title: String) {
+fun SimpleAppBar(title: String) {
     TopAppBar(
         title = {
             Text(title)
@@ -20,4 +21,10 @@ fun employeeAppBar(title: String) {
             titleContentColor = Color.White,
         ),
     )
+}
+
+@Preview
+@Composable
+fun PreviewSimpleAppBar() {
+    SimpleAppBar(title = "test")
 }

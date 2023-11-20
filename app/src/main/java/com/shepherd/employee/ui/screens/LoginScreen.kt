@@ -26,7 +26,7 @@ import androidx.navigation.NavHostController
 import com.shepherd.employee.R
 import com.shepherd.employee.ui.navigation.Screen
 import com.shepherd.employee.ui.screens.composables.ProgressView
-import com.shepherd.employee.ui.screens.composables.employeeAppBar
+import com.shepherd.employee.ui.screens.composables.SimpleAppBar
 import com.shepherd.employee.viewModel.EmployeeViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -36,14 +36,13 @@ fun LoginScreen(
     viewModel: EmployeeViewModel,
 ) {
     val uiState by viewModel.loginUiState.collectAsState()
-    val scaffoldState = rememberScrollState()
 
     val emailState = remember { mutableStateOf(TextFieldValue()) }
     val passwordState = remember { mutableStateOf(TextFieldValue()) }
 
     Scaffold(
         topBar = {
-            employeeAppBar(title = stringResource(id = R.string.app_name))
+            SimpleAppBar(title = stringResource(id = R.string.app_name))
         },
     ) { _ ->
         if (uiState.isLoading) {

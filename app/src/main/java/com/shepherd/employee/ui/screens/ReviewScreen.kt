@@ -20,7 +20,8 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.shepherd.employee.R
 import com.shepherd.employee.ui.navigation.Screen
-import com.shepherd.employee.ui.screens.composables.employeeAppBar
+import com.shepherd.employee.ui.screens.composables.LoadImageFromUrl
+import com.shepherd.employee.ui.screens.composables.SimpleAppBar
 import com.shepherd.employee.viewModel.EmployeeViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -31,7 +32,7 @@ fun ReviewScreen(
 ) {
     Scaffold(
         topBar = {
-            employeeAppBar(
+            SimpleAppBar(
                 title = stringResource(id = R.string.review),
             )
         },
