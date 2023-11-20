@@ -26,12 +26,12 @@ class EmployeeActivity : ComponentActivity() {
             finish()
             exitProcess(0)
         }
+
         setContent {
             EmployeeTheme {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                 ) {
-                    //   LoginScreen(viewModel)
                     navigation(viewModel = viewModel)
                 }
             }
