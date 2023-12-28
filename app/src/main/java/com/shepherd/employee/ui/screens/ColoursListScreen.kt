@@ -20,11 +20,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.shepherd.employee.R
 import com.shepherd.employee.networking.data.response.Colour
 import com.shepherd.employee.ui.navigation.Screen
 import com.shepherd.employee.ui.screens.composables.ColoredCircle
+import com.shepherd.employee.ui.screens.composables.ProgressView
 import com.shepherd.employee.ui.screens.composables.SimpleAppBar
 import com.shepherd.employee.viewModel.EmployeeViewModel
 
@@ -51,16 +53,33 @@ fun ColoursListScreen(
         ) {
             val uiState by viewModel.coloursListUiState.collectAsState()
 
+            when {
+                uiState.isLoading -> {
+                    ProgressView()
+                }
+
+                uiState.isError -> {
+                    Text(
+                        text = stringResource(id = R.string.error_occurred),
+                        color = Color.Red,
+                        modifier = Modifier.padding(bottom = 10.dp),
+                        fontSize = 16.sp,
+                    )
+                }
+
+                uiState.isSuccess -> {
+                    ColoursList(
+                        navController = navController,
+                        colours = uiState.colours,
+                        modifier = Modifier.padding(4.dp),
+                        viewModel = viewModel,
+                    )
+                }
+            }
+
             LaunchedEffect(Unit) {
                 viewModel.fetchColours()
             }
-
-            ColoursList(
-                navController = navController,
-                colours = uiState.colours,
-                modifier = Modifier.padding(4.dp),
-                viewModel = viewModel,
-            )
         }
     }
 }

@@ -45,7 +45,6 @@ import com.shepherd.employee.ui.screens.composables.AppBarWithAction
 import com.shepherd.employee.ui.screens.composables.LoadImageFromUrl
 import com.shepherd.employee.viewModel.EmployeeViewModel
 import java.text.SimpleDateFormat
-import java.util.Calendar
 import java.util.Locale
 
 @OptIn(ExperimentalMaterial3Api::class)

@@ -105,7 +105,7 @@ fun ReviewScreen(
                 fontWeight = FontWeight.Bold,
             )
 
-            Text(text = if (viewModel.selectedColour != null) " ${viewModel.selectedColour!!.name}" else "Colour")
+            Text(text = viewModel.selectedColour?.name ?: "Colour")
             Text(text = " ${viewModel.selectedPlaceOfBirth}")
             Text(text = if (viewModel.selectedResidential != null) " ${viewModel.selectedResidential}" else "Residential Address")
 
